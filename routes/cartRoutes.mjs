@@ -16,6 +16,7 @@ router
       res.send(err.message);
     }
   })
+  //Update cart Delete cart 
   .put(async (req, res) => {
     try {
       const cart = await Cart.findById(req.params.id);
@@ -26,7 +27,7 @@ router
 
       await cart.save();
 
-      res.send("add succsessfull");
+      res.send("added successfully");
     } catch (err) {
       console.error(err.message);
       res.send(err.message);
@@ -36,10 +37,7 @@ router
 // create a cart
 router.post("/", async (req, res) => {
   try {
-    let cart = new Cart({
-      name: req.body.name,
-      items: [],
-    });
+
 
     await cart.save();
 
@@ -49,5 +47,24 @@ router.post("/", async (req, res) => {
     res.send(err.message);
   }
 });
+
+
+// DELETE a cart by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedCart = await Cart.findByIdAndDelete(req.params.id);
+
+    if (!deletedCart) {
+      return res.status(404).send("Cart not found");
+    }
+
+    res.status(200).json({ message: "Cart deleted successfully" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(err.message);
+  }
+});
+
+
 
 export default router;

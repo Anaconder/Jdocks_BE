@@ -9,6 +9,7 @@ const cartItemSchema = new mongoose.Schema(
       required: true,
     },
     qty: { type: Number, default: 1 },
+    category:{type: String, default: 1},// do I specify survaillance, networking and such here?
   },
   { _id: false }
 );
