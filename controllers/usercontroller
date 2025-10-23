@@ -56,7 +56,7 @@ let login = async (req, res) => {
       return res.status(400).json({ msg: "Invalid Credentials" });
     }
 
-    const isMatch = // password validation
+    // const isMatch = // password validation
 
     // Check to see if password matches, if not return error
 //     if (!isMatch) {

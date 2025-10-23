@@ -56,8 +56,6 @@ router
 // create a cart
 router.post("/", async (req, res) => {
   try {
-
-
     await Cart.save();
 
     res.json(Cart);

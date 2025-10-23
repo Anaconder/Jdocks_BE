@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import Inventory from "../models/inventorySchema.mjs";
 
 const router = express.Router();
@@ -25,10 +25,15 @@ router
       console.error(err.message);
       res.send(err.message);
     }
-  })
+  });
+
+  
+router
+  .route("/:id")
+  //delete item routes
   .delete(async (req, res) => {
       try {
-        const deletedItem = await Cart.findByIdAndDelete(req.params.id);
+        const deletedItem = await Inventory.findByIdAndDelete(req.params.id);
   
         if (!deletedItem) {
           return res.status(404).send("Item not found");
@@ -40,7 +45,20 @@ router
         res.status(500).send(err.message);
       }
   
-     });
+     })
 
-
+  // update item
+  .put(async (req, res) => {
+    try {
+      const Item = await Inventory.findByIdAndUpdate(req.params.id,req.body);
+    
+      if (!Item) return res.send("No Inventory found");
+      
+      res.send("changed successfully");
+      } catch (err) {
+        console.error(err.message);
+        res.send(err.message);
+      }
+    
+})
 export default router;

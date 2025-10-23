@@ -1,71 +1,34 @@
-//Imports
-import express from 'express'; 
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./db/conn.mjs";
+import itemRoutes from "./routes/itemRoutes.mjs";
+import cartRoutes from "./routes/cartRoutes.mjs";
+// import users from "./routes/users.mjs";
+import logger from"./Middleware/logger.mjs";
+import GlbErr from "./Middleware/GlbErr.mjs"
+import cors from "cors";
 
+//  Setups
+dotenv.config();
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-//Setups
+connectDB();
 
-//Middleware
-function logReq(req,res,next){
-    console.log(`req received ${req.method} made to '${req.ur}'`)
-    next();
-    
-}
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(logger);
 
-app.use();
+// Routes
+app.use("/cart", cartRoutes);
+app.use("/item", itemRoutes);
+// app.use("/user",users);
 
-//Routes
+// Global Err
+app.use(GlbErr);
 
-app
-    .route("/")
-    .get((req,res) =>{
-        res.send('Testing Post route');
-    })
-
-    .post((req,res) =>{
-        res.send('Testing Post route');
-    })
-
-app
-    .route("/:id")
-
-    .put((req,res) =>{
-        console.log(req.params);
-        res.send(`Testing put route: param value is ${req.params.id}`);
-    })
-
-    .delete((req,res) =>{
-        console.log(req.params);
-        res.send(`Testing delete route: param value is ${req.params.id}`);
-    })
-
-
-
-
-// //read-get
-// app.get('/',(req, res) => {
-//     res.send('Testing,Home path');
-//     res.json();
-// })
-
-// //POST
-// app.post('/',(req,res) =>{
-//     res.send('Testing Post route');
-// })
-// //Put
-// app.put('/:id',(req,res) =>{
-//     console.log(req.params);
-//     res.send(`Testing Put route: param value is ${req.params.id}`);
-// })
-// //Delete
-// app.delete('/:id',(req,res) =>{
-//     console.log(req.params);
-//     res.send(`Testing delete route: param value is ${req.params.id}`);
-// })
-//Global Error Handling Middleware
-
-//server listener
-app.listen(PORT,() => {
-    console.log(`Server Running on Port: ${PORT}`);
-})
+// Listener
+app.listen(PORT, () => {
+  console.log(`Server listening on PORT: ${PORT}`);
+});
