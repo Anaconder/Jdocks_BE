@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/conn.mjs";
 import itemRoutes from "./routes/itemRoutes.mjs";
 import cartRoutes from "./routes/cartRoutes.mjs";
-// import users from "./routes/users.mjs";
+import users from "./routes/users.mjs";
 import logger from"./Middleware/logger.mjs";
 import GlbErr from "./Middleware/GlbErr.mjs"
 import cors from "cors";
@@ -23,7 +23,7 @@ app.use(logger);
 // Routes
 app.use("/cart", cartRoutes);
 app.use("/item", itemRoutes);
-// app.use("/user",users);
+app.use("/user",users);
 
 // Global Err
 app.use(GlbErr);

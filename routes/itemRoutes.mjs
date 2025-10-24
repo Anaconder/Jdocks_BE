@@ -60,5 +60,5 @@ router
         res.send(err.message);
       }
     
-})
+});
 export default router;
